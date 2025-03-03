@@ -6,11 +6,6 @@ class UserController {
 
     public function __construct($db) {
         $this->db = $db;
-
-        // ✅ Start session only if not already started
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 
     public function login() {
@@ -32,7 +27,7 @@ class UserController {
                 exit();
             }
         } else {
-            include "view/login.php"; // ✅ Load login view
+            include "view/login.php";
         }
     }
 
@@ -63,7 +58,7 @@ class UserController {
                 exit();
             }
         } else {
-            include __DIR__ . '/../view/register.php';
+            include 'view/register.php';
         }
     }
     

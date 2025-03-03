@@ -9,10 +9,9 @@
     <h2>Login</h2>
     
     <?php
-    // Show error messages if login fails
     if (isset($_SESSION['login_error'])) {
         echo "<p style='color:red;'>" . $_SESSION['login_error'] . "</p>";
-        unset($_SESSION['login_error']); // Clear message after showing it
+        unset($_SESSION['login_error']);
     }
     ?>
 

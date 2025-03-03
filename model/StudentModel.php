@@ -2,32 +2,42 @@
 class StudentModel {
     private $db;
 
-    public function __construct($database) {
-        $this->db = $database;
+    public function __construct($db) {
+        if (!$db) {
+            die("Database connection failed!");
+        }
+        $this->db = $db;
     }
 
     public function getAllStudents() {
-        $query = "SELECT * FROM students ORDER BY id ASC";
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->db->prepare("SELECT id, student_name, email, student_id FROM students");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function createStudent($student_name, $student_id, $email) {
-        $query = "INSERT INTO students (student_name, student_id, email) VALUES (:student_name, :student_id, :email)";
+    public function addStudent($name, $email) {
+        $query = "SELECT MAX(id) AS max_id FROM students";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':student_name', $student_name);
-        $stmt->bindParam(':student_id', $student_id);
-        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        return $stmt->execute();
-    }
-
-    public function deleteStudent($id) {
-        $query = "DELETE FROM students WHERE id = :id";
+        $nextId = $row['max_id'] + 1;
+    
+        $studentId = "S" . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+    
+        $query = "INSERT INTO students (student_id, student_name, email) VALUES (:student_id, :student_name, :email)";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute();
+        $stmt->execute([
+            ':student_id' => $studentId,
+            ':student_name' => $name,
+            ':email' => $email
+        ]);
+        return true;
+    }
+    
+    public function deleteStudent($id) {
+        $stmt = $this->db->prepare("DELETE FROM students WHERE id = ?");
+        return $stmt->execute([$id]);
     }
 }
 ?>
