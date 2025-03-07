@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Register</title>
 </head>
 <body>
+    <div class="container">
     <h2>Register</h2>
     <?php
     if (isset($_SESSION['register_error'])) {
@@ -24,5 +26,6 @@
         <button type="submit">Register</button>
     </form>
     <p>Already have an account? <a href="index.php?page=login">Login here</a></p>
+    </div>
 </body>
 </html>

@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Students List</title>
 </head>
 <body>
+    <div class="container">
     <h2>Students</h2>
+    <div style="text-align: right; margin-bottom: 10px;">
+        <a href="logout.php">
+            <button style="background-color: red; color: white; border: none; padding: 10px 15px; cursor: pointer;">
+                Logout
+            </button>
+        </a>
+    </div>
     <table border="1">
         <tr>
             <th>ID</th>
@@ -22,7 +31,7 @@
             <td><?php echo htmlspecialchars($student['email']); ?></td>
             <td><?php echo htmlspecialchars($student['student_id']); ?></td>
             <td>
-                <a href="index.php?page=delete_student&id=<?php echo $student['id']; ?>">Delete</a>
+                <a href="index.php?page=delete_student&id=<?php echo $student['id']; ?>" style="color: red;">Delete</a>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -34,6 +43,6 @@
         <input type="email" name="email" placeholder="Student Email" required>
         <button type="submit">Add</button>
     </form>
-    <a href="logout.php">Logout</a>
+    </div>
 </body>
 </html>
